@@ -5,33 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Missing Minis — WoW Miniatures Game</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #0d0f1a;
-        --surface: #13162a;
-        --border: #1e2240;
-        --text: #c8cce8;
-        --muted: #5a5f80;
-        --gold: #f4a522;
-        --gold-dim: #7a520f;
+        --stone-darkest: #ffffff;
+        --stone-dark: #f5f3ef;
+        --stone-mid: #faf9f7;
+        --stone-light: #f0ede8;
+        --stone-border: #d4c9b8;
+        --stone-rim: #a8936e;
 
-        --epic-color: #c084fc;
-        --epic-glow: rgba(168, 85, 247, 0.4);
-        --epic-bg: rgba(88, 28, 135, 0.25);
-        --epic-border: #7c3aed;
+        --parchment: #7a5c2e;
+        --parchment-dim: #a07840;
+        --parchment-bg: #faf9f7;
 
-        --rare-color: #60a5fa;
-        --rare-glow: rgba(59, 130, 246, 0.4);
-        --rare-bg: rgba(29, 78, 216, 0.2);
-        --rare-border: #2563eb;
+        --amber: #8a5c1a;
+        --amber-dim: #b07828;
+        --amber-glow: rgba(138, 92, 26, 0.12);
 
-        --common-color: #94a3b8;
-        --common-glow: rgba(100, 116, 139, 0.3);
-        --common-bg: rgba(51, 65, 85, 0.25);
-        --common-border: #475569;
+        --epic-color: #7a4f00; /* WoW epic gold — dark on white */
+        --epic-border: #c8940a;
+        --rare-color: #1060a0; /* WoW rare blue — dark on white */
+        --rare-border: #4090c8;
+        --common-color: #5a5248; /* WoW common grey — dark on white */
+        --common-border: #a09880;
+
+        --text: #3a3028;
+        --text-dim: #7a6e5e;
+        --text-bright: #1e1810;
       }
 
       *,
@@ -43,889 +46,1025 @@
       }
 
       body {
-        font-family: "Inter", sans-serif;
-        background: var(--bg);
+        font-family: "Crimson Text", Georgia, serif;
+        background-color: #e8e2d8;
         color: var(--text);
         min-height: 100vh;
-        padding-bottom: 4rem;
       }
 
-      /* ── HEADER ── */
-      .site-header {
-        background: linear-gradient(180deg, #0a0c18 0%, var(--bg) 100%);
-        border-bottom: 1px solid var(--border);
-        padding: 2.5rem 2rem 2rem;
-        text-align: center;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: blur(12px);
+      /* ═══ OUTER FRAME ═══ */
+      .outer-frame {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-left: 2px solid var(--stone-border);
+        border-right: 2px solid var(--stone-border);
+        min-height: 100vh;
+        background: #ffffff;
       }
+
+      /* ═══ HEADER ═══ */
+      .site-header {
+        background: linear-gradient(
+          180deg,
+          #f5f0e8 0%,
+          #ede6d8 60%,
+          #ffffff 100%
+        );
+        border-bottom: 3px solid var(--stone-border);
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .site-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: none;
+        pointer-events: none;
+      }
+
+      .header-inner {
+        padding: 2.5rem 2.5rem 1.8rem;
+        position: relative;
+      }
+
+      /* decorative corner flourishes */
+      .corner {
+        position: absolute;
+        font-size: 1.1rem;
+        color: var(--stone-rim);
+        opacity: 0.7;
+      }
+      .corner.tl {
+        top: 0.6rem;
+        left: 0.8rem;
+      }
+      .corner.tr {
+        top: 0.6rem;
+        right: 0.8rem;
+      }
+
+      .header-ornament {
+        text-align: center;
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+        color: var(--stone-rim);
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+      }
+
       .site-header h1 {
         font-family: "Cinzel", serif;
-        font-size: clamp(1.4rem, 4vw, 2.4rem);
         font-weight: 700;
-        letter-spacing: 0.04em;
-        color: var(--gold);
-        text-shadow: 0 0 40px rgba(244, 165, 34, 0.35);
-        margin-bottom: 0.3rem;
-      }
-      .site-header .sub {
-        font-size: 0.82rem;
-        color: var(--muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 1.4rem;
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
+        text-align: center;
+        color: var(--amber);
+        text-shadow:
+          0 0 30px rgba(232, 160, 48, 0.5),
+          0 2px 4px rgba(0, 0, 0, 0.8);
+        letter-spacing: 0.06em;
+        line-height: 1.15;
+        margin-bottom: 0.4rem;
       }
 
-      /* ── COUNTERS ── */
+      .site-header .sub {
+        text-align: center;
+        font-family: "Crimson Text", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--parchment-dim);
+        letter-spacing: 0.05em;
+        margin-bottom: 1.6rem;
+      }
+
+      /* ═══ DIVIDER ═══ */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 2.5rem;
+        margin: 0.5rem 0;
+      }
+      .divider .line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--stone-rim),
+          transparent
+        );
+      }
+      .divider .glyph {
+        color: var(--amber-dim);
+        font-size: 0.9rem;
+      }
+
+      /* ═══ COUNTER PILLS ═══ */
       .counters {
         display: flex;
-        gap: 0.75rem;
+        gap: 0.6rem;
         justify-content: center;
         flex-wrap: wrap;
+        padding: 1.2rem 2rem 1.8rem;
       }
       .counter-pill {
         display: flex;
         align-items: center;
-        gap: 0.45rem;
-        padding: 0.35rem 0.9rem;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 600;
+        gap: 0.5rem;
+        padding: 0.35rem 1rem;
+        border-radius: 3px;
+        font-family: "Cinzel", serif;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
         border: 1px solid;
         cursor: pointer;
-        transition: all 0.18s;
-        user-select: none;
+        transition: all 0.15s;
+        text-transform: uppercase;
+        background: #ffffff;
+      }
+      .counter-pill.all {
+        color: var(--amber);
+        border-color: var(--amber-dim);
       }
       .counter-pill.epic {
-        background: var(--epic-bg);
         color: var(--epic-color);
         border-color: var(--epic-border);
       }
       .counter-pill.rare {
-        background: var(--rare-bg);
         color: var(--rare-color);
         border-color: var(--rare-border);
       }
       .counter-pill.common {
-        background: var(--common-bg);
         color: var(--common-color);
         border-color: var(--common-border);
       }
-      .counter-pill.all {
-        background: rgba(244, 165, 34, 0.1);
-        color: var(--gold);
-        border-color: var(--gold-dim);
-      }
+
       .counter-pill:hover,
       .counter-pill.active {
-        filter: brightness(1.25);
-        box-shadow: 0 0 12px currentColor;
+        background: var(--stone-light);
+        box-shadow:
+          0 0 10px rgba(138, 92, 26, 0.1),
+          inset 0 0 8px rgba(0, 0, 0, 0.05);
       }
-      .counter-pill .dot {
+      .counter-pill.active {
+        border-width: 1px;
+      }
+      .counter-pill .gem {
         width: 7px;
         height: 7px;
-        border-radius: 50%;
+        border-radius: 1px;
+        transform: rotate(45deg);
         background: currentColor;
+        box-shadow: 0 0 4px currentColor;
+        flex-shrink: 0;
       }
 
-      /* ── SEARCH ── */
+      /* ═══ SEARCH ═══ */
       .search-wrap {
-        padding: 1.5rem 2rem 0;
-        max-width: 480px;
+        padding: 0 2.5rem 1.8rem;
+      }
+      .search-inner {
+        position: relative;
+        max-width: 420px;
         margin: 0 auto;
+      }
+      .search-inner::before {
+        content: "⚔";
+        position: absolute;
+        left: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        pointer-events: none;
       }
       .search-wrap input {
         width: 100%;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 0.6rem 1rem 0.6rem 2.6rem;
-        color: var(--text);
-        font-family: "Inter", sans-serif;
-        font-size: 0.88rem;
+        background: #ffffff;
+        border: 1px solid var(--stone-border);
+        border-radius: 3px;
+        padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+        color: var(--text-bright);
+        font-family: "Crimson Text", serif;
+        font-size: 1rem;
         outline: none;
         transition:
           border-color 0.2s,
           box-shadow 0.2s;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%235a5f80' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: 0.8rem center;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
       }
       .search-wrap input::placeholder {
-        color: var(--muted);
+        color: var(--text-dim);
+        font-style: italic;
       }
       .search-wrap input:focus {
-        border-color: var(--gold-dim);
-        box-shadow: 0 0 0 2px rgba(244, 165, 34, 0.12);
+        border-color: var(--amber-dim);
+        box-shadow:
+          inset 0 1px 3px rgba(0, 0, 0, 0.08),
+          0 0 0 2px rgba(138, 92, 26, 0.1);
       }
 
-      /* ── SECTION LABELS ── */
+      /* ═══ CONTENT AREA ═══ */
+      .content {
+        padding: 0 2rem 3rem;
+      }
+
+      /* ═══ SECTION LABEL ═══ */
       .section-label {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        padding: 0 2rem;
-        margin: 2.5rem 0 1rem;
-        max-width: 1400px;
-        margin-left: auto;
-        margin-right: auto;
+        gap: 1rem;
+        margin: 2.5rem 0 1.2rem;
       }
-      .section-label .gem {
-        width: 10px;
-        height: 10px;
+      .section-label .gem-lg {
+        width: 12px;
+        height: 12px;
         border-radius: 2px;
         transform: rotate(45deg);
         flex-shrink: 0;
       }
       .section-label h2 {
         font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
       }
-      .section-label .line {
+      .section-label .line-left {
+        width: 24px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.4;
+      }
+      .section-label .line-right {
         flex: 1;
         height: 1px;
-        background: var(--border);
+        opacity: 0.2;
       }
       .section-label .count {
         font-size: 0.75rem;
-        color: var(--muted);
+        color: var(--text-dim);
+        font-family: "Cinzel", serif;
+        white-space: nowrap;
       }
-      .section-label.epic .gem {
-        background: var(--epic-color);
-        box-shadow: 0 0 6px var(--epic-color);
-      }
-      .section-label.epic h2 {
+
+      .section-label.epic {
         color: var(--epic-color);
       }
-      .section-label.rare .gem {
-        background: var(--rare-color);
-        box-shadow: 0 0 6px var(--rare-color);
+      .section-label.epic .gem-lg {
+        background: var(--epic-color);
+        box-shadow: 0 0 8px var(--epic-color);
       }
-      .section-label.rare h2 {
+      .section-label.epic .line-right {
+        background: var(--epic-color);
+      }
+      .section-label.rare {
         color: var(--rare-color);
       }
-      .section-label.common .gem {
-        background: var(--common-color);
-        box-shadow: 0 0 6px var(--common-color);
+      .section-label.rare .gem-lg {
+        background: var(--rare-color);
+        box-shadow: 0 0 8px var(--rare-color);
       }
-      .section-label.common h2 {
+      .section-label.rare .line-right {
+        background: var(--rare-color);
+      }
+      .section-label.common {
         color: var(--common-color);
       }
+      .section-label.common .gem-lg {
+        background: var(--common-color);
+        box-shadow: 0 0 5px var(--common-color);
+      }
+      .section-label.common .line-right {
+        background: var(--common-color);
+      }
 
-      /* ── GRID ── */
+      /* ═══ GRID ═══ */
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 1rem;
-        padding: 0 2rem;
-        max-width: 1400px;
-        margin: 0 auto;
+        grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+        gap: 0.85rem;
       }
 
-      /* ── CARDS ── */
+      /* ═══ CARD ═══ */
       .card {
-        background: var(--surface);
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        overflow: visible;
+        background: #faf9f7;
+        border-radius: 4px;
+        border: 1px solid var(--stone-border);
+        overflow: hidden;
         position: relative;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s,
-          border-color 0.2s;
         cursor: default;
+        transition:
+          transform 0.18s,
+          box-shadow 0.18s,
+          border-color 0.18s;
+      }
+      .card::before {
+        /* top edge highlight */
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        opacity: 0;
+        transition: opacity 0.2s;
       }
       .card:hover {
-        transform: translateY(-3px);
+        transform: translateY(-2px);
+      }
+      .card:hover::before {
+        opacity: 1;
       }
 
       .card.epic {
-        border-color: var(--epic-border);
+        border-color: #4a3010;
       }
       .card.epic:hover {
-        box-shadow: 0 6px 28px var(--epic-glow);
-        border-color: var(--epic-color);
+        border-color: var(--epic-border);
+        box-shadow:
+          0 4px 20px rgba(220, 150, 30, 0.25),
+          0 0 0 1px var(--epic-border);
+      }
+      .card.epic::before {
+        background: var(--epic-color);
       }
 
       .card.rare {
-        border-color: var(--rare-border);
+        border-color: #1a2e40;
       }
       .card.rare:hover {
-        box-shadow: 0 6px 28px var(--rare-glow);
-        border-color: var(--rare-color);
+        border-color: var(--rare-border);
+        box-shadow:
+          0 4px 20px rgba(79, 195, 247, 0.2),
+          0 0 0 1px var(--rare-border);
+      }
+      .card.rare::before {
+        background: var(--rare-color);
       }
 
       .card.common {
-        border-color: var(--common-border);
+        border-color: var(--stone-border);
       }
       .card.common:hover {
-        box-shadow: 0 6px 20px var(--common-glow);
-        border-color: var(--common-color);
+        border-color: var(--common-border);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      }
+      .card.common::before {
+        background: var(--common-color);
       }
 
-      .card-img {
-        width: 100%;
-        aspect-ratio: 1;
-        object-fit: contain;
-        background: #080a14;
-        border-radius: 11px 11px 0 0;
-        display: block;
-        transition: transform 0.25s;
-      }
-      .card:hover .card-img {
-        transform: scale(1.04);
-      }
       .card-img-wrap {
         overflow: hidden;
-        border-radius: 11px 11px 0 0;
-      }
-      .no-img-placeholder {
-        width: 100%;
+        background: #f0ece4;
         aspect-ratio: 1;
-        background: #080a14;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        border-radius: 11px 11px 0 0;
-        opacity: 0.3;
+      }
+      .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        transition:
+          transform 0.25s,
+          filter 0.25s;
+        filter: brightness(1) saturate(0.95);
+      }
+      .card:hover .card-img {
+        transform: scale(1.06);
+        filter: brightness(1.04) saturate(1.05);
+      }
+
+      /* rarity corner tab */
+      .rarity-tab {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.2rem 0.5rem;
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        border-bottom-left-radius: 3px;
+      }
+      .card.epic .rarity-tab {
+        background: rgba(255, 248, 230, 0.92);
+        color: var(--epic-color);
+        border-left: 1px solid var(--epic-border);
+        border-bottom: 1px solid var(--epic-border);
+      }
+      .card.rare .rarity-tab {
+        background: rgba(230, 240, 255, 0.92);
+        color: var(--rare-color);
+        border-left: 1px solid var(--rare-border);
+        border-bottom: 1px solid var(--rare-border);
+      }
+      .card.common .rarity-tab {
+        background: rgba(245, 243, 240, 0.92);
+        color: var(--common-color);
+        border-left: 1px solid var(--common-border);
+        border-bottom: 1px solid var(--common-border);
       }
 
       .card-body {
-        padding: 0.65rem 0.75rem 0.75rem;
+        padding: 0.55rem 0.65rem 0.65rem;
+        background: linear-gradient(180deg, #faf9f7 0%, #f5f2ec 100%);
+        border-top: 1px solid var(--stone-border);
       }
       .card-name {
-        font-size: 0.78rem;
+        font-family: "Crimson Text", serif;
+        font-size: 0.82rem;
         font-weight: 600;
-        color: #e2e5f5;
-        line-height: 1.35;
-        margin-bottom: 0.4rem;
-      }
-      .card-rarity {
-        font-size: 0.68rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .card.epic .card-rarity {
-        color: var(--epic-color);
-      }
-      .card.rare .card-rarity {
-        color: var(--rare-color);
-      }
-      .card.common .card-rarity {
-        color: var(--common-color);
+        color: var(--text-bright);
+        line-height: 1.3;
       }
 
-      /* rarity corner badge */
-      .rarity-badge {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        width: 22px;
-        height: 22px;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.65rem;
-        font-weight: 700;
-        letter-spacing: 0;
-        border: 1px solid;
-        backdrop-filter: blur(4px);
+      /* ═══ FOOTER ═══ */
+      .site-footer {
+        border-top: 3px solid var(--stone-border);
+        background: linear-gradient(180deg, #f5f0e8 0%, #ede6d8 100%);
+        padding: 2rem 2.5rem;
+        text-align: center;
       }
-      .card.epic .rarity-badge {
-        background: rgba(88, 28, 135, 0.75);
-        color: var(--epic-color);
-        border-color: var(--epic-border);
+      .site-footer .footer-divider {
+        margin: 0 0 1.4rem;
       }
-      .card.rare .rarity-badge {
-        background: rgba(29, 78, 216, 0.7);
-        color: var(--rare-color);
-        border-color: var(--rare-border);
+      .site-footer p {
+        font-size: 0.82rem;
+        color: var(--text-dim);
+        line-height: 2;
       }
-      .card.common .rarity-badge {
-        background: rgba(51, 65, 85, 0.75);
-        color: var(--common-color);
-        border-color: var(--common-border);
+      .site-footer a {
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      .site-footer a.link-db {
+        color: var(--amber);
+      }
+      .site-footer a.link-discord {
+        color: #7289da;
+      }
+      .site-footer a:hover {
+        filter: brightness(1.3);
+      }
+      .site-footer .disclaimer {
+        margin-top: 0.8rem;
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        opacity: 0.55;
+        font-style: italic;
       }
 
-      /* ── EMPTY STATE ── */
+      /* ═══ EMPTY ═══ */
       .empty-state {
         text-align: center;
         padding: 4rem 2rem;
-        color: var(--muted);
-        font-size: 0.9rem;
+        color: var(--text-dim);
+        font-style: italic;
+        font-size: 1rem;
         display: none;
       }
-      .empty-state .icon {
-        font-size: 2.5rem;
-        margin-bottom: 0.75rem;
-      }
 
-      /* ── HIDDEN ── */
       .hidden {
         display: none !important;
       }
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <h1>⚔ Missing Minis</h1>
-      <p class="sub">WoW Miniatures Game &nbsp;·&nbsp; Inventory Tracker</p>
-      <div class="counters">
-        <button class="counter-pill all active" data-filter="all">
-          <span class="dot"></span> All <span id="cnt-all">30</span>
-        </button>
-        <button class="counter-pill epic" data-filter="epic">
-          <span class="dot"></span> Epic <span id="cnt-epic">5</span>
-        </button>
-        <button class="counter-pill rare" data-filter="rare">
-          <span class="dot"></span> Rare <span id="cnt-rare">18</span>
-        </button>
-        <button class="counter-pill common" data-filter="common">
-          <span class="dot"></span> Common <span id="cnt-common">7</span>
-        </button>
-      </div>
-    </header>
+    <div class="outer-frame">
+      <!-- ══ HEADER ══ -->
+      <header class="site-header">
+        <div class="header-inner">
+          <span class="corner tl">✦</span>
+          <span class="corner tr">✦</span>
+          <div class="header-ornament">
+            ✦ &nbsp; Nandos Missing Lists &nbsp; ✦
+          </div>
+          <h1>Wants</h1>
+          <p class="sub">Inventory of miniatures that i miss</p>
+        </div>
 
-    <div class="search-wrap">
-      <input
-        type="text"
-        id="search"
-        placeholder="Search minis…"
-        autocomplete="off"
-      />
-    </div>
+        <div class="divider">
+          <span class="line"></span><span class="glyph">⚔</span
+          ><span class="line"></span>
+        </div>
 
-    <!-- EPIC -->
-    <div class="section-label epic" id="label-epic">
-      <span class="gem"></span>
-      <h2>Epic</h2>
-      <span class="line"></span>
-      <span class="count" id="vis-epic">5 minis</span>
-    </div>
-    <div class="grid" id="grid-epic">
-      <div class="card epic" data-name="high priestess tyrande whisperwind">
-        <span class="rarity-badge">E</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/tyrande-whisperwind-mini-JnogNU-6.jpg"
-            alt="High Priestess Tyrande Whisperwind"
-            loading="lazy"
-          />
+        <div class="counters">
+          <button class="counter-pill all active" data-filter="all">
+            <span class="gem"></span> All &nbsp;<span id="cnt-all">30</span>
+          </button>
+          <button class="counter-pill epic" data-filter="epic">
+            <span class="gem"></span> Epic &nbsp;<span id="cnt-epic">5</span>
+          </button>
+          <button class="counter-pill rare" data-filter="rare">
+            <span class="gem"></span> Rare &nbsp;<span id="cnt-rare">18</span>
+          </button>
+          <button class="counter-pill common" data-filter="common">
+            <span class="gem"></span> Common &nbsp;<span id="cnt-common"
+              >7</span
+            >
+          </button>
         </div>
-        <div class="card-body">
-          <div class="card-name">High Priestess Tyrande Whisperwind</div>
-          <div class="card-rarity">Epic</div>
-        </div>
-      </div>
-      <div class="card epic" data-name="lady vashj">
-        <span class="rarity-badge">E</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/lady-vashj-mini-BbcOWLX_.jpg"
-            alt="Lady Vashj"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Lady Vashj</div>
-          <div class="card-rarity">Epic</div>
-        </div>
-      </div>
-      <div class="card epic" data-name="prophet velen">
-        <span class="rarity-badge">E</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/prophet-velen-mini-8iKAsyLL.jpg"
-            alt="Prophet Velen"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Prophet Velen</div>
-          <div class="card-rarity">Epic</div>
-        </div>
-      </div>
-      <div class="card epic" data-name="rexxar">
-        <span class="rarity-badge">E</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/rexxar-mini-45aMXuJx.jpg"
-            alt="Rexxar"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Rexxar</div>
-          <div class="card-rarity">Epic</div>
-        </div>
-      </div>
-      <div class="card epic" data-name="warchief thrall">
-        <span class="rarity-badge">E</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/warchief-thrall-mini-BpV5BH0o.jpg"
-            alt="Warchief Thrall"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Warchief Thrall</div>
-          <div class="card-rarity">Epic</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- RARE -->
-    <div class="section-label rare" id="label-rare">
-      <span class="gem"></span>
-      <h2>Rare</h2>
-      <span class="line"></span>
-      <span class="count" id="vis-rare">18 minis</span>
-    </div>
-    <div class="grid" id="grid-rare">
-      <div class="card rare" data-name="anchorite cristia">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/anchorite-cristia-mini-eKS_q0gN.jpg"
-            alt="Anchorite Cristia"
-            loading="lazy"
-          />
+        <div class="search-wrap">
+          <div class="search-inner">
+            <input
+              type="text"
+              id="search"
+              placeholder="Search by name…"
+              autocomplete="off"
+            />
+          </div>
         </div>
-        <div class="card-body">
-          <div class="card-name">Anchorite Cristia</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="bogstrok razorclaw">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/bogstrok-razorclaw-mini-BPkfYHIQ.jpg"
-            alt="Bogstrok Razorclaw"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Bogstrok Razorclaw</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="champion shadowsun">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/champion-shadowsun-mini-7Udeg9Yy.jpg"
-            alt="Champion Shadowsun"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Champion Shadowsun</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="conqueror aluna">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/conqueror-aluna-mini-C7fcxqxg.jpg"
-            alt="Conqueror Aluna"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Conqueror Aluna</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="deathwhisperer">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/deathwhisperer-mini-CzY0nGZf.jpg"
-            alt="Deathwhisperer"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Deathwhisperer</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="dralor">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/dralor-mini-C-byP5D7.jpg"
-            alt="Dralor"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Dralor</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="elizabetha cairnwillow">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/elizabetha-cairnwillow-mini-Dx6kyXsR.jpg"
-            alt="Elizabetha Cairnwillow"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Elizabetha Cairnwillow</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="enraged fire spirit">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/enraged-fire-spirit-mini-Dl4YX-kd.jpg"
-            alt="Enraged Fire Spirit"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Enraged Fire Spirit</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="grimdron">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/grimdron-mini-3OEIF5Nx.jpg"
-            alt="Grimdron"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Grimdron</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="illiana sunshield">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/illiana-sunshield-mini-DinbIXoD.jpg"
-            alt="Illiana Sunshield"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Illiana Sunshield</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="magdeline prideheart">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/magdeline-prideheart-mini-B2XQiZu9.jpg"
-            alt="Magdeline Prideheart"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Magdeline Prideheart</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="parvink">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/parvink-mini-CszpOtSR.jpg"
-            alt="Parvink"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Parvink</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="razaani nexus stalker">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/razaani-nexus-stalker-mini-lbm3KLZe.jpg"
-            alt="Razaani Nexus Stalker"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Razaani Nexus Stalker</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="sha'do shado">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/shado-mini-CK4l8lji.jpg"
-            alt="Sha'do"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Sha'do</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="shienor sorcerer">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/shienor-sorcerer-mini-CJ-0E6rD.jpg"
-            alt="Shienor Sorcerer"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Shienor Sorcerer</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="skeletal priest">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/skeletal-priest-mini-CTvSUc1B.jpg"
-            alt="Skeletal Priest"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Skeletal Priest</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="thangal">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/thangal-mini-CXsIopEU.jpg"
-            alt="Thangal"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Thangal</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-      <div class="card rare" data-name="warp stalker">
-        <span class="rarity-badge">R</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/warp-stalker-mini-CJyAop6T.jpg"
-            alt="Warp Stalker"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Warp Stalker</div>
-          <div class="card-rarity">Rare</div>
-        </div>
-      </div>
-    </div>
+      </header>
 
-    <!-- COMMON -->
-    <div class="section-label common" id="label-common">
-      <span class="gem"></span>
-      <h2>Common</h2>
-      <span class="line"></span>
-      <span class="count" id="vis-common">7 minis</span>
-    </div>
-    <div class="grid" id="grid-common">
-      <div class="card common" data-name="beren embersbane">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/beren-embersbane-mini-Cj_cmmyz.jpg"
-            alt="Beren Embersbane"
-            loading="lazy"
-          />
+      <!-- ══ CONTENT ══ -->
+      <main class="content">
+        <!-- EPIC -->
+        <div class="section-label epic" id="label-epic">
+          <span class="gem-lg"></span>
+          <span class="line-left"></span>
+          <h2>Epic</h2>
+          <span class="line-right"></span>
+          <span class="count" id="vis-epic">5 minis</span>
         </div>
-        <div class="card-body">
-          <div class="card-name">Beren Embersbane</div>
-          <div class="card-rarity">Common</div>
+        <div class="grid" id="grid-epic">
+          <div class="card epic" data-name="high priestess tyrande whisperwind">
+            <span class="rarity-tab">EPIC</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/tyrande-whisperwind-mini-JnogNU-6.jpg"
+                alt="High Priestess Tyrande Whisperwind"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">High Priestess Tyrande Whisperwind</div>
+            </div>
+          </div>
+          <div class="card epic" data-name="lady vashj">
+            <span class="rarity-tab">EPIC</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/lady-vashj-mini-BbcOWLX_.jpg"
+                alt="Lady Vashj"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Lady Vashj</div></div>
+          </div>
+          <div class="card epic" data-name="prophet velen">
+            <span class="rarity-tab">EPIC</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/prophet-velen-mini-8iKAsyLL.jpg"
+                alt="Prophet Velen"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Prophet Velen</div>
+            </div>
+          </div>
+          <div class="card epic" data-name="rexxar">
+            <span class="rarity-tab">EPIC</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/rexxar-mini-45aMXuJx.jpg"
+                alt="Rexxar"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Rexxar</div></div>
+          </div>
+          <div class="card epic" data-name="warchief thrall">
+            <span class="rarity-tab">EPIC</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/warchief-thrall-mini-BpV5BH0o.jpg"
+                alt="Warchief Thrall"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Warchief Thrall</div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="card common" data-name="harnum firebelly">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/harnum-firebelly-mini-Dc06qn4G.jpg"
-            alt="Harnum Firebelly"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Harnum Firebelly</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-      <div class="card common" data-name="hulok trailblazer">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/hulok-trailblazer-mini-CdVPMi4g.jpg"
-            alt="Hulok Trailblazer"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Hulok Trailblazer</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-      <div class="card common" data-name="najan spiritbinder">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/najan-spiritbinder-mini-DKEkT2LO.jpg"
-            alt="Najan Spiritbinder"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Najan Spiritbinder</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-      <div class="card common" data-name="sethekk talon-lord">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/sethekk-talon-lord-mini-BgQYVIae.jpg"
-            alt="Sethekk Talon-Lord"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Sethekk Talon-Lord</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-      <div class="card common" data-name="umbrage">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/umbrage-mini-CFyNMsyW.jpg"
-            alt="Umbrage"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Umbrage</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-      <div class="card common" data-name="za'zu the grizzled zazu">
-        <span class="rarity-badge">C</span>
-        <div class="card-img-wrap">
-          <img
-            class="card-img"
-            src="img/zazu-the-grizzled-mini-DBVD17Wr.jpg"
-            alt="Za'zu the Grizzled"
-            loading="lazy"
-          />
-        </div>
-        <div class="card-body">
-          <div class="card-name">Za'zu the Grizzled</div>
-          <div class="card-rarity">Common</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="empty-state" id="empty">
-      <div class="icon">🔍</div>
-      <p>No minis match your search.</p>
+        <!-- RARE -->
+        <div class="section-label rare" id="label-rare">
+          <span class="gem-lg"></span>
+          <span class="line-left"></span>
+          <h2>Rare</h2>
+          <span class="line-right"></span>
+          <span class="count" id="vis-rare">18 minis</span>
+        </div>
+        <div class="grid" id="grid-rare">
+          <div class="card rare" data-name="anchorite cristia">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/anchorite-cristia-mini-eKS_q0gN.jpg"
+                alt="Anchorite Cristia"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Anchorite Cristia</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="bogstrok razorclaw">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/bogstrok-razorclaw-mini-BPkfYHIQ.jpg"
+                alt="Bogstrok Razorclaw"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Bogstrok Razorclaw</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="champion shadowsun">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/champion-shadowsun-mini-7Udeg9Yy.jpg"
+                alt="Champion Shadowsun"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Champion Shadowsun</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="conqueror aluna">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/conqueror-aluna-mini-C7fcxqxg.jpg"
+                alt="Conqueror Aluna"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Conqueror Aluna</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="deathwhisperer">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/deathwhisperer-mini-CzY0nGZf.jpg"
+                alt="Deathwhisperer"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Deathwhisperer</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="dralor">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/dralor-mini-C-byP5D7.jpg"
+                alt="Dralor"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Dralor</div></div>
+          </div>
+          <div class="card rare" data-name="elizabetha cairnwillow">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/elizabetha-cairnwillow-mini-Dx6kyXsR.jpg"
+                alt="Elizabetha Cairnwillow"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Elizabetha Cairnwillow</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="enraged fire spirit">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/enraged-fire-spirit-mini-Dl4YX-kd.jpg"
+                alt="Enraged Fire Spirit"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Enraged Fire Spirit</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="grimdron">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/grimdron-mini-3OEIF5Nx.jpg"
+                alt="Grimdron"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Grimdron</div></div>
+          </div>
+          <div class="card rare" data-name="illiana sunshield">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/illiana-sunshield-mini-DinbIXoD.jpg"
+                alt="Illiana Sunshield"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Illiana Sunshield</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="magdeline prideheart">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/magdeline-prideheart-mini-B2XQiZu9.jpg"
+                alt="Magdeline Prideheart"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Magdeline Prideheart</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="parvink">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/parvink-mini-CszpOtSR.jpg"
+                alt="Parvink"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Parvink</div></div>
+          </div>
+          <div class="card rare" data-name="razaani nexus stalker">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/razaani-nexus-stalker-mini-lbm3KLZe.jpg"
+                alt="Razaani Nexus Stalker"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Razaani Nexus Stalker</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="sha'do shado">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/shado-mini-CK4l8lji.jpg"
+                alt="Sha'do"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Sha'do</div></div>
+          </div>
+          <div class="card rare" data-name="shienor sorcerer">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/shienor-sorcerer-mini-CJ-0E6rD.jpg"
+                alt="Shienor Sorcerer"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Shienor Sorcerer</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="skeletal priest">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/skeletal-priest-mini-CTvSUc1B.jpg"
+                alt="Skeletal Priest"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Skeletal Priest</div>
+            </div>
+          </div>
+          <div class="card rare" data-name="thangal">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/thangal-mini-CXsIopEU.jpg"
+                alt="Thangal"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Thangal</div></div>
+          </div>
+          <div class="card rare" data-name="warp stalker">
+            <span class="rarity-tab">RARE</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/warp-stalker-mini-CJyAop6T.jpg"
+                alt="Warp Stalker"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Warp Stalker</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMON -->
+        <div class="section-label common" id="label-common">
+          <span class="gem-lg"></span>
+          <span class="line-left"></span>
+          <h2>Common</h2>
+          <span class="line-right"></span>
+          <span class="count" id="vis-common">7 minis</span>
+        </div>
+        <div class="grid" id="grid-common">
+          <div class="card common" data-name="beren embersbane">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/beren-embersbane-mini-Cj_cmmyz.jpg"
+                alt="Beren Embersbane"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Beren Embersbane</div>
+            </div>
+          </div>
+          <div class="card common" data-name="harnum firebelly">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/harnum-firebelly-mini-Dc06qn4G.jpg"
+                alt="Harnum Firebelly"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Harnum Firebelly</div>
+            </div>
+          </div>
+          <div class="card common" data-name="hulok trailblazer">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/hulok-trailblazer-mini-CdVPMi4g.jpg"
+                alt="Hulok Trailblazer"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Hulok Trailblazer</div>
+            </div>
+          </div>
+          <div class="card common" data-name="najan spiritbinder">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/najan-spiritbinder-mini-DKEkT2LO.jpg"
+                alt="Najan Spiritbinder"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Najan Spiritbinder</div>
+            </div>
+          </div>
+          <div class="card common" data-name="sethekk talon-lord">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/sethekk-talon-lord-mini-BgQYVIae.jpg"
+                alt="Sethekk Talon-Lord"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Sethekk Talon-Lord</div>
+            </div>
+          </div>
+          <div class="card common" data-name="umbrage">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/umbrage-mini-CFyNMsyW.jpg"
+                alt="Umbrage"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body"><div class="card-name">Umbrage</div></div>
+          </div>
+          <div class="card common" data-name="za'zu the grizzled zazu">
+            <span class="rarity-tab">COMMON</span>
+            <div class="card-img-wrap">
+              <img
+                class="card-img"
+                src="img/zazu-the-grizzled-mini-DBVD17Wr.jpg"
+                alt="Za'zu the Grizzled"
+                loading="lazy"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-name">Za'zu the Grizzled</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" id="empty">
+          <p>No miniatures match your search.</p>
+        </div>
+      </main>
+
+      <!-- ══ FOOTER ══ -->
+      <footer class="site-footer">
+        <div class="footer-divider">
+          <div class="divider">
+            <span class="line"></span><span class="glyph">✦</span
+            ><span class="line"></span>
+          </div>
+        </div>
+        <p>
+          Images sourced from
+          <a
+            class="link-db"
+            href="https://wowminisdb.com/"
+            target="_blank"
+            rel="noopener"
+            >wowminisdb.com</a
+          >
+          &nbsp;·&nbsp; Join the community on
+          <a
+            class="link-discord"
+            href="https://discord.gg/ybTq5V8DP"
+            target="_blank"
+            rel="noopener"
+            >Discord</a
+          >
+        </p>
+        <p class="disclaimer">
+          Fan project — not affiliated with Blizzard Entertainment or Upper Deck
+          Entertainment
+        </p>
+      </footer>
     </div>
-    <footer
-      style="
-        text-align: center;
-        padding: 2.5rem 2rem;
-        margin-top: 2rem;
-        border-top: 1px solid #1e2240;
-        font-size: 0.78rem;
-        color: #5a5f80;
-        line-height: 2;
-      "
-    >
-      Images sourced from
-      <a
-        href="https://wowminisdb.com/"
-        target="_blank"
-        rel="noopener"
-        style="color: #f4a522; text-decoration: none"
-        >wowminisdb.com</a
-      >
-      &nbsp;·&nbsp; Join the community on
-      <a
-        href="https://discord.gg/ybTq5V8DP"
-        target="_blank"
-        rel="noopener"
-        style="color: #7289da; text-decoration: none"
-        >Discord</a
-      >
-      <br />
-      <span style="font-size: 0.72rem; opacity: 0.6"
-        >WoW Miniatures Game fan project — not affiliated with Blizzard or Upper
-        Deck Entertainment</span
-      >
-    </footer>
+    <!-- /outer-frame -->
+
     <script>
       const pills = document.querySelectorAll(".counter-pill");
-      const search = document.getElementById("search");
+      const searchEl = document.getElementById("search");
       let activeFilter = "all";
 
       function update() {
-        const q = search.value.trim().toLowerCase();
+        const q = searchEl.value.trim().toLowerCase();
         const rarities = ["epic", "rare", "common"];
         let totalVisible = 0;
 
@@ -934,26 +1073,18 @@
           const label = document.getElementById("label-" + r);
           const vis = document.getElementById("vis-" + r);
           const cards = grid.querySelectorAll(".card");
-          let visibleInSection = 0;
-
+          let n = 0;
           const sectionHidden = activeFilter !== "all" && activeFilter !== r;
-
           cards.forEach((card) => {
-            const nameMatch = !q || card.dataset.name.includes(q);
-            if (!sectionHidden && nameMatch) {
-              card.classList.remove("hidden");
-              visibleInSection++;
-            } else {
-              card.classList.add("hidden");
-            }
+            const show =
+              !sectionHidden && (!q || card.dataset.name.includes(q));
+            card.classList.toggle("hidden", !show);
+            if (show) n++;
           });
-
-          const show = visibleInSection > 0;
-          grid.classList.toggle("hidden", !show);
-          label.classList.toggle("hidden", !show);
-          vis.textContent =
-            visibleInSection + (visibleInSection === 1 ? " mini" : " minis");
-          totalVisible += visibleInSection;
+          grid.classList.toggle("hidden", n === 0);
+          label.classList.toggle("hidden", n === 0);
+          vis.textContent = n + (n === 1 ? " mini" : " minis");
+          totalVisible += n;
         });
 
         document.getElementById("empty").style.display =
@@ -969,7 +1100,7 @@
         });
       });
 
-      search.addEventListener("input", update);
+      searchEl.addEventListener("input", update);
     </script>
   </body>
 </html>
